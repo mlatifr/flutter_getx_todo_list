@@ -39,6 +39,7 @@ class HomeScreen extends StatelessWidget {
                   leading: Checkbox(
                     value: todoController.todos[index].done,
                     onChanged: (value) {
+                      // cara merubah isi List
                       print('Checkbox Value: $value');
                       // yang dirubah harus class dari Model Todo nya.
                       // bukan cuma value dari Todo nya saja
