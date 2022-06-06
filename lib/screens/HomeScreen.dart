@@ -32,14 +32,17 @@ class HomeScreen extends StatelessWidget {
                               color:
                                   Theme.of(context).textTheme.bodyText1.color)),
                   onTap: () {},
-                  trailing: Checkbox(
+                  leading: Checkbox(
                     value: todoController.todos[index].done,
                     onChanged: (value) {
+                      // yang dirubah harus class dari Model Todo nya.
+                      // bukan cuma value dari Todo nya saja
                       var changed = todoController.todos[index];
                       changed.done = value;
                       todoController.todos[index] = changed;
                     },
                   ),
+                  trailing: Icon(Icons.chevron_right_rounded),
                 ),
             separatorBuilder: (_, __) => Divider(),
             itemCount: todoController.todos.length)),
