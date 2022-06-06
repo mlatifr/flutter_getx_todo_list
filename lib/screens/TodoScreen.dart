@@ -5,9 +5,17 @@ import 'package:get/get.dart';
 
 class TodoScreen extends StatelessWidget {
   final TodoController todoController = Get.find<TodoController>();
+  final int index;
+  TodoScreen({this.index});
   @override
   Widget build(BuildContext context) {
-    TextEditingController textEditingController = TextEditingController();
+    String text = '';
+    if (this.index != null) {
+      text = todoController.todos[index].text;
+    }
+
+    TextEditingController textEditingController =
+        TextEditingController(text: text);
     return Scaffold(
       appBar: AppBar(),
       body: Container(
@@ -39,13 +47,22 @@ class TodoScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    todoController.todos
-                        .add(Todo(text: textEditingController.text));
+                    if (this.index == null)
+                      todoController.todos
+                          .add(Todo(text: textEditingController.text));
+                    else {
+                      
+                      var editing = todoController.todos[index];
+                      editing.text = textEditingController.text;
+                      todoController.todos[index] = editing;
+                    }
                     Get.back();
                   },
-                  child: Text('Add'),
+                  child: Text((this.index == null) ? 'Add' : 'Edit'),
                   style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).primaryColor),
+                      primary: (this.index == null)
+                          ? Theme.of(context).primaryColor
+                          : Colors.green[400]),
                 )
               ],
             )

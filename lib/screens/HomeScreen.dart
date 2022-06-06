@@ -31,14 +31,25 @@ class HomeScreen extends StatelessWidget {
                           : TextStyle(
                               color:
                                   Theme.of(context).textTheme.bodyText1.color)),
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(TodoScreen(
+                      index: index,
+                    ));
+                  },
                   leading: Checkbox(
                     value: todoController.todos[index].done,
                     onChanged: (value) {
+                      print('Checkbox Value: $value');
                       // yang dirubah harus class dari Model Todo nya.
                       // bukan cuma value dari Todo nya saja
+
+                      // var changed =>  menyimpan todoController[index]
                       var changed = todoController.todos[index];
+                      print(
+                          'var changed value| changed.done ${changed.done}  changed.text: ${changed.text}');
+                      // merubah value dari Class Todo,bagian Instance Done
                       changed.done = value;
+                      // merubah todoController.todos[index] mirip variable 'changed'
                       todoController.todos[index] = changed;
                     },
                   ),
