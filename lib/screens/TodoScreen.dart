@@ -51,7 +51,6 @@ class TodoScreen extends StatelessWidget {
                       todoController.todos
                           .add(Todo(text: textEditingController.text));
                     else {
-                      
                       var editing = todoController.todos[index];
                       editing.text = textEditingController.text;
                       todoController.todos[index] = editing;

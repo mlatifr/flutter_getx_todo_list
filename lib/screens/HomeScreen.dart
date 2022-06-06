@@ -40,14 +40,11 @@ class HomeScreen extends StatelessWidget {
                     value: todoController.todos[index].done,
                     onChanged: (value) {
                       // cara merubah isi List
-                      print('Checkbox Value: $value');
                       // yang dirubah harus class dari Model Todo nya.
                       // bukan cuma value dari Todo nya saja
 
                       // var changed =>  menyimpan todoController[index]
                       var changed = todoController.todos[index];
-                      print(
-                          'var changed value| changed.done ${changed.done}  changed.text: ${changed.text}');
                       // merubah value dari Class Todo,bagian Instance Done
                       changed.done = value;
                       // merubah todoController.todos[index] mirip variable 'changed'
