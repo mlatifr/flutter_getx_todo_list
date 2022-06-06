@@ -22,36 +22,55 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Container(
         child: Obx(() => ListView.separated(
-            itemBuilder: (context, index) => ListTile(
-                  title: Text(todoController.todos[index].text,
-                      style: (todoController.todos[index].done)
-                          ? TextStyle(
-                              color: Colors.red,
-                              decoration: TextDecoration.lineThrough)
-                          : TextStyle(
-                              color:
-                                  Theme.of(context).textTheme.bodyText1.color)),
-                  onTap: () {
-                    Get.to(TodoScreen(
-                      index: index,
-                    ));
+            itemBuilder: (context, index) => Dismissible(
+                  key: UniqueKey(),
+                  onDismissed: (_) {
+                    var removed = todoController.todos[index];
+                    todoController.todos.removeAt(index);
+                    Get.snackbar('Task Removed', 'The task ${removed.text}',
+                        mainButton: TextButton(
+                            onPressed: () {
+                              if (removed == null) {
+                                return;
+                              }
+                              todoController.todos.insert(index, removed);
+                              removed = null;
+                            },
+                            child: Text('Undo')));
                   },
-                  leading: Checkbox(
-                    value: todoController.todos[index].done,
-                    onChanged: (value) {
-                      // cara merubah isi List
-                      // yang dirubah harus class dari Model Todo nya.
-                      // bukan cuma value dari Todo nya saja
-
-                      // var changed =>  menyimpan todoController[index]
-                      var changed = todoController.todos[index];
-                      // merubah value dari Class Todo,bagian Instance Done
-                      changed.done = value;
-                      // merubah todoController.todos[index] mirip variable 'changed'
-                      todoController.todos[index] = changed;
+                  child: ListTile(
+                    title: Text(todoController.todos[index].text,
+                        style: (todoController.todos[index].done)
+                            ? TextStyle(
+                                color: Colors.red,
+                                decoration: TextDecoration.lineThrough)
+                            : TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    .color)),
+                    onTap: () {
+                      Get.to(TodoScreen(
+                        index: index,
+                      ));
                     },
+                    leading: Checkbox(
+                      value: todoController.todos[index].done,
+                      onChanged: (value) {
+                        // cara merubah isi List
+                        // yang dirubah harus class dari Model Todo nya.
+                        // bukan cuma value dari Todo nya saja
+
+                        // var changed =>  menyimpan todoController[index]
+                        var changed = todoController.todos[index];
+                        // merubah value dari Class Todo,bagian Instance Done
+                        changed.done = value;
+                        // merubah todoController.todos[index] mirip variable 'changed'
+                        todoController.todos[index] = changed;
+                      },
+                    ),
+                    trailing: Icon(Icons.chevron_right_rounded),
                   ),
-                  trailing: Icon(Icons.chevron_right_rounded),
                 ),
             separatorBuilder: (_, __) => Divider(),
             itemCount: todoController.todos.length)),
